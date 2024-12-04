@@ -6,10 +6,11 @@ import asyncio
 from paho.mqtt import client as mqtt_client
 import json
 import struct
+import os
 
 
 # constants
-MQTT_ADDR = "127.0.0.1"
+MQTT_ADDR = os.getenv("MQTT_BROKER_ADDR", "localhost")
 MQTT_PORT = 1883
 OPC_UA_ENDPOINT =  "opc.tcp://0.0.0.0:4841/conveyor/"
 
@@ -223,8 +224,8 @@ class Engine:
         self.mqtt_client = self.mqtt_client_init()
 
     def mqtt_client_init(self):
-        print("Connecting to mqtt broker...", end="\t")
-        client = mqtt_client.Client("box_conveyor_sim")
+        print(f"Connecting to mqtt broker ({MQTT_ADDR}:{MQTT_PORT:d})...", end="\t")
+        client = mqtt_client.Client(client_id="box_conveyor_sim")
         try:
             res = client.connect(MQTT_ADDR, MQTT_PORT)
         except ConnectionError as e:
