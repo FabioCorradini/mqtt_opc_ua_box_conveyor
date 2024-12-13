@@ -3,3 +3,6 @@ asyncua
 pygcode
 fastapi
 uvicorn
+pymodbus
+argparse
+rich
